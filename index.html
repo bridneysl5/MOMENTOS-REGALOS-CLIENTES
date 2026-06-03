@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- QRious para generar QR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     
     <script>
         tailwind.config = {
@@ -116,6 +118,9 @@
                     <a href="ARELYS/" target="_blank" class="flex-1 bg-gradient-to-r from-primary to-secondary text-white py-2.5 rounded-lg text-center font-medium text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-primary/25">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Landing
                     </a>
+                    <button onclick="downloadQR('ARELYS')" class="w-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors tooltip" title="Descargar QR">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </button>
                     <button onclick="copyLink('ARELYS')" class="w-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors tooltip" title="Copiar enlace">
                         <i class="fa-solid fa-link"></i>
                     </button>
@@ -140,6 +145,9 @@
                     <a href="ARIELLA/" target="_blank" class="flex-1 bg-gradient-to-r from-primary to-secondary text-white py-2.5 rounded-lg text-center font-medium text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-primary/25">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Landing
                     </a>
+                    <button onclick="downloadQR('ARIELLA')" class="w-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors tooltip" title="Descargar QR">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </button>
                     <button onclick="copyLink('ARIELLA')" class="w-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors tooltip" title="Copiar enlace">
                         <i class="fa-solid fa-link"></i>
                     </button>
@@ -179,6 +187,47 @@
                     toast.classList.add('translate-y-20', 'opacity-0');
                 }, 3000);
             });
+        }
+
+        function downloadQR(folderName) {
+            const url = window.location.origin + '/' + folderName + '/';
+            
+            // Generar el código QR
+            var qr = new QRious({
+                value: url,
+                size: 300,
+                level: 'H'
+            });
+            
+            // Crear un canvas para dibujar el diseño final (Texto + QR)
+            var canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 460;
+            var ctx = canvas.getContext('2d');
+            
+            // Fondo blanco
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Añadir texto superior
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 30px "Outfit", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('¡Escanea tu sorpresa!', canvas.width / 2, 60);
+            
+            // Dibujar el QR en el centro
+            ctx.drawImage(qr.canvas, 50, 90, 300, 300);
+            
+            // Añadir el nombre del cliente abajo para saber de quién es
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'bold 16px "Outfit", sans-serif';
+            ctx.fillText('Regalo de ' + folderName, canvas.width / 2, 430);
+            
+            // Descargar la imagen
+            var link = document.createElement('a');
+            link.download = 'QR_' + folderName + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
         }
     </script>
 </body>
