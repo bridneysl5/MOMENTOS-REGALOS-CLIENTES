@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Día del Padre - Regalos Clientes</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- QRious para generar QR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#d4af37', // Dorado
+                        secondary: '#b8860b', // Dorado oscuro
+                        dark: '#020617', // Navy muy oscuro
+                        card: '#0f172a'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #020617;
+            color: white;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,0.2) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(43, 74%, 49%, 0.1) 0, transparent 50%);
+            min-height: 100vh;
+        }
+        
+        .client-card {
+            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .client-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.4);
+            border-color: rgba(212, 175, 55, 0.8);
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .glass-header {
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+    </style>
+</head>
+<body class="antialiased pb-12">
+
+    <!-- Pantalla de Login -->
+    <div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#020617] backdrop-blur-md transition-opacity duration-500">
+        <div class="bg-[#0f172a] p-8 rounded-2xl shadow-2xl border border-primary/20 max-w-sm w-full mx-4 text-center relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-20 h-20 bg-primary/20 rounded-bl-full -mr-4 -mt-4"></div>
+            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.4)] mx-auto mb-6 relative z-10">
+                <i class="fa-solid fa-lock text-white text-2xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Panel Privado</h2>
+            <p class="text-gray-400 mb-6 text-sm">Ingresa tu contraseña para continuar</p>
+            
+            <form onsubmit="checkPassword(event)" class="relative z-10">
+                <input type="password" id="pwd-input" placeholder="Contraseña..." class="w-full bg-[#020617] border border-primary/30 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors mb-4 text-center">
+                <p id="pwd-error" class="text-red-400 text-sm mb-4 hidden font-medium">Contraseña incorrecta</p>
+                <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-dark py-3 rounded-lg font-bold hover:opacity-90 transition-opacity shadow-[0_4px_15px_rgba(212,175,55,0.3)]">
+                    Entrar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contenido del Dashboard -->
+    <div id="dashboard-content" style="display: none;">
+
+    <!-- Header -->
+    <header class="glass-header sticky top-0 z-50 px-6 py-4 flex justify-between items-center mb-8">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/30">
+                <i class="fa-solid fa-crown text-[#020617] text-lg"></i>
+            </div>
+            <h1 class="text-xl font-bold tracking-wide text-white">Panel Día del Padre</h1>
+        </div>
+        <div>
+            <span class="text-sm text-primary bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20 font-medium">
+                <i class="fa-solid fa-shield-halved mr-1"></i> Admin Seguro
+            </span>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6">
+        
+        <div class="mb-10">
+            <h2 class="text-3xl font-bold mb-2 text-white">Regalos Día del Padre</h2>
+            <p class="text-gray-400">Gestiona y comparte los enlaces de los regalos para papá. Este panel ya está actualizado y enlazado a la carpeta del Día del Padre.</p>
+        </div>
+
+        <!-- Grid de Clientes -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="client-list">
+            
+            <!-- CLIENTE: EJEMPLO PAPA -->
+            <div class="client-card rounded-2xl p-6 relative group overflow-hidden">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-primary/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center text-xl text-primary">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">REGALO PAPA</h3>
+                        <p class="text-xs text-primary font-medium">Landing Activa</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-2 relative z-10">
+                    <!-- Enlace directo a la carpeta EJEMPLO PAPA -->
+                    <a href="EJEMPLO PAPA/" target="_blank" class="flex-1 bg-gradient-to-r from-primary to-secondary text-[#020617] py-2.5 rounded-lg text-center font-bold text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(212,175,55,0.3)]">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Landing
+                    </a>
+                    <button onclick="downloadQR('EJEMPLO PAPA')" class="w-10 bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/50 rounded-lg flex items-center justify-center text-gray-300 hover:text-primary transition-colors tooltip" title="Descargar QR">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </button>
+                    <button onclick="copyLink('EJEMPLO PAPA')" class="w-10 bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/50 rounded-lg flex items-center justify-center text-gray-300 hover:text-primary transition-colors tooltip" title="Copiar enlace">
+                        <i class="fa-solid fa-link"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TARJETA INSTRUCCIONES PARA AGREGAR NUEVO -->
+            <div class="rounded-2xl p-6 border-2 border-dashed border-primary/30 flex flex-col justify-center items-center text-center opacity-70 hover:opacity-100 transition-opacity hover:border-primary/60 hover:bg-primary/5 cursor-pointer">
+                <div class="w-12 h-12 rounded-full bg-[#020617] border border-primary/30 flex items-center justify-center mb-3 text-primary">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <h3 class="font-medium text-white mb-1">¿Nuevo Regalo?</h3>
+                <p class="text-xs text-gray-400">Duplica la tarjeta de "REGALO PAPA" en el archivo index.html para añadir a otro cliente.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Notificación Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-white text-dark px-4 py-3 rounded-lg shadow-2xl font-medium text-sm flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <div class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white">
+            <i class="fa-solid fa-check text-xs"></i>
+        </div>
+        <span>Enlace copiado al portapapeles</span>
+    </div>
+
+    </div> <!-- Fin de dashboard-content -->
+
+    <script>
+        // --- LOGICA DE CONTRASEÑA ---
+        const correctPassword = "Leyrinbridneys@1502";
+
+        // Al cargar, revisar si la sesión está iniciada
+        window.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('admin_logged_in') === 'true') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+            }
+        });
+
+        function checkPassword(e) {
+            e.preventDefault();
+            const input = document.getElementById('pwd-input').value;
+            const errorMsg = document.getElementById('pwd-error');
+            
+            if (input === correctPassword) {
+                // Contraseña Correcta
+                sessionStorage.setItem('admin_logged_in', 'true');
+                errorMsg.classList.add('hidden');
+                
+                const loginScreen = document.getElementById('login-screen');
+                loginScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                    document.getElementById('dashboard-content').style.display = 'block';
+                }, 500);
+            } else {
+                // Contraseña Incorrecta
+                errorMsg.classList.remove('hidden');
+                document.getElementById('pwd-input').value = "";
+            }
+        }
+
+        function copyLink(folderName) {
+            // Genera la URL absoluta (funciona en local y en Netlify)
+            const url = window.location.origin + '/' + folderName + '/';
+            
+            navigator.clipboard.writeText(url).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-y-20', 'opacity-0');
+                
+                setTimeout(() => {
+                    toast.classList.add('translate-y-20', 'opacity-0');
+                }, 3000);
+            });
+        }
+
+        function downloadQR(folderName) {
+            const url = window.location.origin + '/' + encodeURIComponent(folderName) + '/';
+            
+            // Generar el código QR
+            var qr = new QRious({
+                value: url,
+                size: 300,
+                level: 'H'
+            });
+            
+            // Crear un canvas para dibujar el diseño final (Texto + QR)
+            var canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 460;
+            var ctx = canvas.getContext('2d');
+            
+            // Fondo blanco
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Añadir texto superior
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 30px "Outfit", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('¡Escanea tu regalo!', canvas.width / 2, 60);
+            
+            // Dibujar el QR en el centro
+            ctx.drawImage(qr.canvas, 50, 90, 300, 300);
+            
+            // Añadir el nombre del cliente abajo para saber de quién es
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'bold 16px "Outfit", sans-serif';
+            ctx.fillText('Feliz Día Papá - Regalo Especial', canvas.width / 2, 430);
+            
+            // Descargar la imagen
+            var link = document.createElement('a');
+            link.download = 'QR_' + folderName + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>

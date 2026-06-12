@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Día del Padre! • Un regalo especial</title>
+    <!-- Tailwind CSS para diseño moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para íconos hermosos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts elegantes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --main-gold: #D4AF37;
+            --main-navy: #0F172A;
+            --main-dark: #020617;
+            --main-light: #F8FAFC;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--main-dark);
+            overflow-x: hidden;
+        }
+
+        .font-cursive {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+
+        /* Efectos de flotación suave para las fotos */
+        @keyframes float-polaroid {
+            0%, 100% { transform: translateY(0px) rotate(1deg); }
+            50% { transform: translateY(-10px) rotate(-1deg); }
+        }
+        
+        @keyframes float-bg-left {
+            0%, 100% { transform: translateY(0px) rotate(-8deg); }
+            50% { transform: translateY(-8px) rotate(-11deg); }
+        }
+
+        @keyframes float-bg-right {
+            0%, 100% { transform: translateY(0px) rotate(8deg); }
+            50% { transform: translateY(-8px) rotate(11deg); }
+        }
+
+        .animate-float-main {
+            animation: float-polaroid 5s ease-in-out infinite;
+        }
+
+        .animate-float-bg-left {
+            animation: float-bg-left 6s ease-in-out infinite;
+        }
+
+        .animate-float-bg-right {
+            animation: float-bg-right 5.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex items-center justify-center p-0 md:p-4 text-white">
+
+    <!-- CONTENEDOR EFECTO CONFETI -->
+    <div id="confetti-container" class="absolute inset-0 pointer-events-none overflow-hidden z-0"></div>
+
+    <!-- PANTALLA DE INICIO (Regalo para desbloquear Audio automáticamente) -->
+    <div id="welcome-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#020617] transition-all duration-1000 ease-in-out">
+        <!-- Decoraciones en esquinas del welcome -->
+        <div class="absolute top-0 right-0 w-32 h-32 opacity-30 pointer-events-none">
+            <svg viewBox="0 0 100 100" class="w-full h-full text-[#D4AF37] fill-current">
+                <path d="M100,0 Q80,10 60,0 T20,0 T0,0 L100,100 Z" />
+            </svg>
+        </div>
+        <div class="absolute bottom-0 left-0 w-32 h-32 opacity-30 pointer-events-none">
+            <svg viewBox="0 0 100 100" class="w-full h-full text-[#D4AF37] fill-current rotate-180">
+                <path d="M100,0 Q80,10 60,0 T20,0 T0,0 L100,100 Z" />
+            </svg>
+        </div>
+
+        <div class="text-center p-6 max-w-sm mx-auto relative z-10">
+            <div class="w-24 h-24 bg-[#0F172A] rounded-full flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(212,175,55,0.3)] border-4 border-[#D4AF37] animate-bounce mb-6">
+                <i class="fa-solid fa-crown text-[#D4AF37] text-4xl"></i>
+            </div>
+            
+            <h1 class="text-3xl font-bold tracking-wide text-white mb-2">¡Feliz Día del Padre!</h1>
+            <p class="text-[#D4AF37] text-sm font-semibold mb-6">Toca el botón para abrir tu regalo especial</p>
+            
+            <button onclick="startCelebration()" class="w-full py-4 bg-[#D4AF37] hover:bg-yellow-500 text-[#0F172A] rounded-full font-bold text-lg shadow-xl border-b-4 border-[#B8860B] active:border-b-0 active:translate-y-1 transition-all duration-150 flex items-center justify-center gap-3">
+                <i class="fa-solid fa-gift animate-pulse"></i>
+                <span>Abrir Regalo</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- AUDIO DE FONDO (Fácilmente reemplazable) -->
+    <audio id="bg-music" loop>
+        <source id="music-source" src="musica/Piero - Mi Viejo - 1970 ® 4K.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- TARJETA FORMATO REEL (9:16) -->
+    <main id="main-content" class="relative z-10 w-full max-w-[430px] aspect-[9/16] bg-[#0F172A] rounded-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col justify-between py-8 px-6 border-2 border-[#D4AF37] opacity-0 transition-opacity duration-1000">
+        
+        <!-- DECORACIONES DE ESQUINA -->
+        <!-- Superior Derecha -->
+        <div class="absolute top-0 right-0 w-28 h-28 pointer-events-none z-10 opacity-60">
+            <svg viewBox="0 0 100 100" class="w-full h-full text-[#D4AF37] fill-none stroke-current stroke-[3] stroke-linecap-round">
+                <path d="M60,0 C65,20 80,35 100,40" />
+                <path d="M40,0 C48,28 72,52 100,60" />
+                <path d="M80,0 C83,10 90,17 100,20" />
+            </svg>
+        </div>
+        <!-- Inferior Izquierda -->
+        <div class="absolute bottom-0 left-0 w-28 h-28 pointer-events-none z-10 opacity-60">
+            <svg viewBox="0 0 100 100" class="w-full h-full text-[#D4AF37] fill-none stroke-current stroke-[3] stroke-linecap-round rotate-180">
+                <path d="M60,0 C65,20 80,35 100,40" />
+                <path d="M40,0 C48,28 72,52 100,60" />
+                <path d="M80,0 C83,10 90,17 100,20" />
+            </svg>
+        </div>
+
+        <!-- SECCIÓN SUPERIOR: Título del Cumpleaños -->
+        <div class="text-center space-y-2 pt-2 z-10">
+            <h2 class="text-2xl font-bold tracking-[0.2em] uppercase select-none flex justify-center items-center gap-2">
+                <span class="text-white">Feliz</span>
+                <span class="text-[#D4AF37]">Día</span>
+            </h2>
+            <h1 class="font-cursive text-5xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] select-none">
+                Papá
+            </h1>
+        </div>
+
+        <!-- SECCIÓN CENTRAL: Carrusel de Fotos Polaroid Flotantes -->
+        <div class="relative w-full flex items-center justify-center my-auto min-h-[310px] z-10">
+            
+            <!-- Polaroid de fondo izquierda -->
+            <div class="absolute left-2 w-32 aspect-[4/5] bg-[#F8FAFC] p-2 pb-5 shadow-lg rounded-sm border-2 border-[#D4AF37] -rotate-12 opacity-40 animate-float-bg-left">
+                <div class="w-full h-[82%] bg-slate-300 overflow-hidden rounded-sm">
+                    <img src="imagenes/4.png" alt="Decoración" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/300x400/0F172A/ffffff?text=👔'">
+                </div>
+            </div>
+
+            <!-- Polaroid de fondo derecha -->
+            <div class="absolute right-2 w-32 aspect-[4/5] bg-[#F8FAFC] p-2 pb-5 shadow-lg rounded-sm border-2 border-[#D4AF37] rotate-12 opacity-40 animate-float-bg-right">
+                <div class="w-full h-[82%] bg-slate-300 overflow-hidden rounded-sm">
+                    <img src="imagenes/5.png" alt="Decoración" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/300x400/0F172A/ffffff?text=⌚'">
+                </div>
+            </div>
+
+            <!-- Polaroid Central Principal Animada -->
+            <div class="relative w-56 aspect-[4/5] bg-[#F8FAFC] p-3 pb-8 shadow-[0_15px_35px_rgba(0,0,0,0.5)] rounded-sm border-2 border-[#D4AF37] transition-all duration-500 animate-float-main z-20">
+                <!-- Imagen -->
+                <div class="w-full h-[84%] overflow-hidden bg-slate-100 rounded-sm relative">
+                    <img id="slideshow-img" src="imagenes/1.png" alt="Foto Recuerdo de Papá" class="w-full h-full object-cover transition-opacity duration-500 ease-in-out" onerror="this.src='https://placehold.co/400x500/020617/D4AF37?text=Feliz+Día'">
+                </div>
+                <!-- Pie de Foto -->
+                <div class="absolute bottom-2 left-2 right-2 text-center">
+                    <p id="slideshow-caption" class="font-cursive text-lg text-[#0F172A] font-bold truncate">¡Momentos Especiales! 🎁</p>
+                </div>
+            </div>
+            
+            <!-- Estrellas decorativas esparcidas -->
+            <i class="fa-solid fa-star absolute top-2 left-6 text-[#D4AF37] text-lg animate-pulse"></i>
+            <i class="fa-solid fa-star absolute bottom-4 right-8 text-[#D4AF37] text-sm animate-bounce opacity-70"></i>
+            <i class="fa-solid fa-crown absolute bottom-12 left-8 text-[#D4AF37] text-md -rotate-12 opacity-60"></i>
+        </div>
+
+        <!-- SECCIÓN INFERIOR: Reproductor Musical -->
+        <div class="space-y-4 w-full z-10 px-2 flex flex-col items-center">
+            
+            <!-- Disco musical giratorio -->
+            <div class="flex justify-center mb-4">
+                <button onclick="toggleMusic()" id="spinning-record" class="relative w-20 h-20 bg-black rounded-full border-2 border-[#D4AF37] flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.2)] animate-[spin_3s_linear_infinite]" style="animation-play-state: running;">
+                    <!-- Centro del disco -->
+                    <div class="w-6 h-6 bg-[#0F172A] rounded-full border-2 border-[#D4AF37] flex items-center justify-center z-10">
+                        <i class="fa-solid fa-music text-[10px] text-[#D4AF37]"></i>
+                    </div>
+                    <!-- Surcos del disco -->
+                    <div class="absolute inset-1.5 rounded-full border border-white/10 pointer-events-none"></div>
+                    <div class="absolute inset-3 rounded-full border border-white/5 pointer-events-none"></div>
+                    <div class="absolute inset-4.5 rounded-full border border-white/5 pointer-events-none"></div>
+                </button>
+            </div>
+
+            <!-- Footer de Pedidos -->
+            <div class="text-center pt-2 pb-2 space-y-1 w-full border-t border-white/10">
+                <p class="text-xs text-[#D4AF37] tracking-[0.2em] font-semibold uppercase">Momentos Especiales</p>
+                <p class="text-[10px] text-white/50 tracking-widest">PEDIDOS AL 916098803</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- SCRIPT DE COMPORTAMIENTO -->
+    <script>
+        // Arreglo de fotos para el carrusel infinito de la Polaroid principal
+        const playlistPhotos = [
+            { url: "imagenes/1.png", caption: "¡Feliz Día del Padre! 💙" },
+            { url: "imagenes/2.png", caption: "¡El mejor papá! 👑" },
+            { url: "imagenes/3.png", caption: "¡Te queremos mucho! ✨" },
+            { url: "imagenes/4.png", caption: "¡Momentos juntos! 📸" },
+            { url: "imagenes/5.png", caption: "¡Gracias por todo! 🙌" }
+        ];
+
+        let currentPhotoIndex = 0;
+        let slideshowInterval = null;
+        
+        const music = document.getElementById('bg-music');
+        const spinningRecord = document.getElementById('spinning-record');
+
+        // Inicializar efectos al cargar
+        window.onload = function() {
+            createConfetti();
+        };
+
+        // Activa la pantalla principal y reproduce la música
+        function startCelebration() {
+            // Ocultar bienvenida
+            const welcome = document.getElementById('welcome-screen');
+            welcome.style.opacity = '0';
+            setTimeout(() => {
+                welcome.style.display = 'none';
+                
+                // Mostrar tarjeta Reel
+                const main = document.getElementById('main-content');
+                main.classList.remove('opacity-0');
+                main.classList.add('opacity-100');
+            }, 1000);
+
+            // Intentar reproducir música automáticamente
+            playMusic();
+            
+            // Iniciar carrusel de fotos
+            startSlideshow();
+        }
+
+        // --- SISTEMA DEL REPRODUCTOR DE MÚSICA ---
+        function playMusic() {
+            music.play().then(() => {
+                if (spinningRecord) spinningRecord.style.animationPlayState = 'running';
+            }).catch(e => {
+                console.log("Error al reproducir audio: requiere interacción.");
+            });
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                playMusic();
+            } else {
+                music.pause();
+                if (spinningRecord) spinningRecord.style.animationPlayState = 'paused';
+            }
+        }
+
+        // --- BUCLE DE IMÁGENES AUTOMÁTICO (CARRUSEL) ---
+        function startSlideshow() {
+            if (slideshowInterval) clearInterval(slideshowInterval);
+            slideshowInterval = setInterval(() => {
+                nextPhoto();
+            }, 3500); // Cambia cada 3.5 segundos
+        }
+
+        function showPhoto(index) {
+            if (playlistPhotos.length === 0) return;
+            
+            const imgElement = document.getElementById('slideshow-img');
+            const captionElement = document.getElementById('slideshow-caption');
+            
+            // Transición de desvanecimiento suave
+            imgElement.style.opacity = '0';
+            captionElement.style.opacity = '0';
+            
+            setTimeout(() => {
+                currentPhotoIndex = (index + playlistPhotos.length) % playlistPhotos.length;
+                const currentItem = playlistPhotos[currentPhotoIndex];
+                
+                imgElement.src = currentItem.url;
+                captionElement.innerText = currentItem.caption;
+                
+                imgElement.style.opacity = '1';
+                captionElement.style.opacity = '1';
+            }, 300);
+        }
+
+        function nextPhoto() {
+            showPhoto(currentPhotoIndex + 1);
+        }
+
+        // --- GENERADOR DE CONFETI ELEGANTE ---
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#D4AF37', '#B8860B', '#F8FAFC', '#94A3B8'];
+            const shapes = ['square', 'circle'];
+            const count = 40;
+
+            for (let i = 0; i < count; i++) {
+                const element = document.createElement('div');
+                element.className = 'absolute pointer-events-none shadow-sm';
+                
+                // Color y forma aleatorios
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                element.style.backgroundColor = color;
+                element.style.width = `${Math.random() * 6 + 4}px`;
+                element.style.height = `${Math.random() * 6 + 4}px`;
+                
+                if (shape === 'circle') {
+                    element.style.borderRadius = '50%';
+                }
+
+                // Posiciones y animaciones aleatorias
+                const left = Math.random() * 100;
+                const duration = 6 + Math.random() * 8;
+                const delay = Math.random() * -10;
+
+                element.style.left = `${left}vw`;
+                element.style.top = `-20px`;
+                element.style.opacity = Math.random() * 0.6 + 0.4;
+                
+                // Animación de caída
+                element.animate([
+                    { transform: 'translateY(0px) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(110vh) rotate(${Math.random() * 360 + 360}deg)`, opacity: 0 }
+                ], {
+                    duration: duration * 1000,
+                    delay: delay * 1000,
+                    iterations: Infinity,
+                    easing: 'linear'
+                });
+
+                container.appendChild(element);
+            }
+        }
+    </script>
+</body>
+</html>
