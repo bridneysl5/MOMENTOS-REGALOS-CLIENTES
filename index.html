@@ -75,6 +75,29 @@
 </head>
 <body class="antialiased pb-12">
 
+    <!-- Pantalla de Login -->
+    <div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#0f172a] backdrop-blur-md transition-opacity duration-500">
+        <div class="bg-[#1e293b] p-8 rounded-2xl shadow-2xl border border-white/10 max-w-sm w-full mx-4 text-center relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-20 h-20 bg-primary/20 rounded-bl-full -mr-4 -mt-4"></div>
+            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/30 mx-auto mb-6 relative z-10">
+                <i class="fa-solid fa-lock text-white text-2xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Panel Privado</h2>
+            <p class="text-gray-400 mb-6 text-sm">Ingresa tu contraseña para continuar</p>
+            
+            <form onsubmit="checkPassword(event)" class="relative z-10">
+                <input type="password" id="pwd-input" placeholder="Contraseña..." class="w-full bg-[#0f172a] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors mb-4 text-center">
+                <p id="pwd-error" class="text-red-400 text-sm mb-4 hidden font-medium">Contraseña incorrecta</p>
+                <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-primary/25">
+                    Entrar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contenido del Dashboard (Oculto inicialmente) -->
+    <div id="dashboard-content" style="display: none;">
+
     <!-- Header -->
     <header class="glass-header sticky top-0 z-50 px-6 py-4 flex justify-between items-center mb-8">
         <div class="flex items-center gap-3">
@@ -154,6 +177,60 @@
                 </div>
             </div>
 
+            <!-- CLIENTE: CumplanosBeto -->
+            <div class="client-card rounded-2xl p-6 relative group overflow-hidden">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-primary/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xl text-primary">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold">CumplanosBeto</h3>
+                        <p class="text-xs text-gray-400">Landing Activa</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <a href="CumplanosBeto/" target="_blank" class="flex-1 bg-gradient-to-r from-primary to-secondary text-white py-2.5 rounded-lg text-center font-medium text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-primary/25">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Landing
+                    </a>
+                    <button onclick="downloadQR('CumplanosBeto')" class="w-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors tooltip" title="Descargar QR">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </button>
+                    <button onclick="copyLink('CumplanosBeto')" class="w-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors tooltip" title="Copiar enlace">
+                        <i class="fa-solid fa-link"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- CLIENTE: DIA DEL PADRE -->
+            <div class="client-card rounded-2xl p-6 relative group overflow-hidden">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-primary/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xl text-primary">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold">DIA DEL PADRE</h3>
+                        <p class="text-xs text-gray-400">Landing Activa</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <a href="DIA DEL PADRE/" target="_blank" class="flex-1 bg-gradient-to-r from-primary to-secondary text-white py-2.5 rounded-lg text-center font-medium text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-primary/25">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Landing
+                    </a>
+                    <button onclick="downloadQR('DIA DEL PADRE')" class="w-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors tooltip" title="Descargar QR">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </button>
+                    <button onclick="copyLink('DIA DEL PADRE')" class="w-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors tooltip" title="Copiar enlace">
+                        <i class="fa-solid fa-link"></i>
+                    </button>
+                </div>
+            </div>
+
             <!-- TARJETA INSTRUCCIONES PARA AGREGAR NUEVO (No es un cliente, es para ti) -->
             <div class="rounded-2xl p-6 border-2 border-dashed border-gray-600 flex flex-col justify-center items-center text-center opacity-70 hover:opacity-100 transition-opacity">
                 <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 text-gray-400">
@@ -174,7 +251,43 @@
         <span>Enlace copiado al portapapeles</span>
     </div>
 
+    </div> <!-- Fin de dashboard-content -->
+
     <script>
+        // --- LOGICA DE CONTRASEÑA ---
+        const correctPassword = "Leyrinbridneys@1502";
+
+        // Al cargar, revisar si la sesión está iniciada
+        window.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('admin_logged_in') === 'true') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+            }
+        });
+
+        function checkPassword(e) {
+            e.preventDefault();
+            const input = document.getElementById('pwd-input').value;
+            const errorMsg = document.getElementById('pwd-error');
+            
+            if (input === correctPassword) {
+                // Contraseña Correcta
+                sessionStorage.setItem('admin_logged_in', 'true');
+                errorMsg.classList.add('hidden');
+                
+                const loginScreen = document.getElementById('login-screen');
+                loginScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                    document.getElementById('dashboard-content').style.display = 'block';
+                }, 500);
+            } else {
+                // Contraseña Incorrecta
+                errorMsg.classList.remove('hidden');
+                document.getElementById('pwd-input').value = "";
+            }
+        }
+
         function copyLink(folderName) {
             // Genera la URL absoluta (funciona en local y en Netlify)
             const url = window.location.origin + '/' + folderName + '/';
