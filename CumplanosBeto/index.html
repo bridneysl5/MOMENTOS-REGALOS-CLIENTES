@@ -100,9 +100,9 @@
     </div>
 
     <!-- AUDIO DE FONDO (Fácilmente reemplazable) -->
-    <audio id="bg-music" loop>
+    <audio id="bg-music">
         <!-- Reemplaza el src de abajo con tu archivo MP3 (ej. "musica.mp3") -->
-        <source id="music-source" src="musica/Cancion Patrulla Canina  Paw patrol oficial AutoMagicKids (1).mp3" type="audio/mp3">
+        <source id="music-source" src="musica/Tarma SACSAMARCA Edwin y Franco.mp3" type="audio/mp3">
     </audio>
 
     <!-- TARJETA FORMATO REEL (9:16) -->
@@ -143,14 +143,14 @@
             <!-- Polaroid de fondo izquierda -->
             <div class="absolute left-2 w-32 aspect-[4/5] bg-white p-2 pb-5 shadow-lg rounded-sm border-4 border-[#FFFDD0] -rotate-12 opacity-60 animate-float-bg-left">
                 <div class="w-full h-[82%] bg-slate-300 overflow-hidden rounded-sm">
-                    <img src="imagenes/10.png" alt="Decoración Universitario" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/300x400/811429/ffffff?text=U'">
+                    <img src="img/WhatsApp Image 2026-06-12 at 14.39.52 (1).jpeg" alt="Decoración Universitario" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/300x400/811429/ffffff?text=U'">
                 </div>
             </div>
 
             <!-- Polaroid de fondo derecha -->
             <div class="absolute right-2 w-32 aspect-[4/5] bg-white p-2 pb-5 shadow-lg rounded-sm border-4 border-[#FFFDD0] rotate-12 opacity-60 animate-float-bg-right">
                 <div class="w-full h-[82%] bg-slate-300 overflow-hidden rounded-sm">
-                    <img src="imagenes/11.png" alt="Universitario" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/300x400/FFFDD0/811429?text=U'">
+                    <img src="img/WhatsApp Image 2026-06-12 at 14.39.52 (2).jpeg" alt="Universitario" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/300x400/FFFDD0/811429?text=U'">
                 </div>
             </div>
 
@@ -159,7 +159,7 @@
                 <!-- Imagen -->
                 <div class="w-full h-[84%] overflow-hidden bg-slate-100 rounded-sm relative">
                     <!-- Primera imagen por defecto -->
-                    <img id="slideshow-img" src="imagenes/1.png" alt="Foto Recuerdo de Beto" class="w-full h-full object-cover transition-opacity duration-500 ease-in-out" onerror="this.src='https://placehold.co/400x500/811429/ffffff?text=Feliz+Cumpleaños'">
+                    <img id="slideshow-img" src="img/WhatsApp Image 2026-06-12 at 14.39.52.jpeg" alt="Foto Recuerdo de Beto" class="w-full h-full object-cover transition-opacity duration-500 ease-in-out" onerror="this.src='https://placehold.co/400x500/811429/ffffff?text=Feliz+Cumpleaños'">
                 </div>
                 <!-- Pie de Foto -->
                 <div class="absolute bottom-2 left-2 right-2 text-center">
@@ -190,9 +190,12 @@
             </div>
 
             <!-- Footer de Pedidos -->
-            <div class="text-center pt-1 pb-2 space-y-0.5 mt-8">
+            <div class="text-center pt-1 pb-2 space-y-1.5 mt-6">
                 <p class="text-[10px] text-white/70 tracking-widest font-bold uppercase">Momentos Especiales</p>
-                <p class="text-[10px] text-white/60 tracking-widest font-bold">PEDIDOS AL 916098803</p>
+                <a href="https://wa.me/51916098803?text=Hola,%20deseo%20hacer%20un%20pedido%20de%20un%20regalo%20virtual" target="_blank" class="inline-flex items-center justify-center gap-1.5 text-[11px] text-[#FFFDD0] bg-black/20 hover:bg-black/40 border border-[#FFFDD0]/20 px-4 py-1.5 rounded-full tracking-wider font-bold transition-all hover:scale-105 active:scale-95">
+                    <i class="fa-brands fa-whatsapp text-[#25D366] text-sm"></i>
+                    PEDIDOS AL 916098803
+                </a>
             </div>
         </div>
     </main>
@@ -201,15 +204,9 @@
     <script>
         // Arreglo de fotos para el carrusel infinito de la Polaroid principal
         const playlistPhotos = [
-            { url: "imagenes/1.png", caption: "¡Feliz Cumpleaños! 🎂" },
-            { url: "imagenes/2.png", caption: "¡Y dale U! ⚽" },
-            { url: "imagenes/3.png", caption: "¡El mejor equipo! 🏆" },
-            { url: "imagenes/4.png", caption: "¡Regalos geniales! 🎁" },
-            { url: "imagenes/5.png", caption: "¡Garra Crema! 🦁" },
-            { url: "imagenes/6.png", caption: "¡Mucha diversión! 🎈" },
-            { url: "imagenes/7.png", caption: "¡Momentos Mágicos! ✨" },
-            { url: "imagenes/8.png", caption: "¡Pura Pasión! ❤️" },
-            { url: "imagenes/9.png", caption: "¡Día inolvidable! 🌟" }
+            { url: "img/WhatsApp Image 2026-06-12 at 14.39.52.jpeg", caption: "¡Feliz Cumpleaños! 🎂" },
+            { url: "img/WhatsApp Image 2026-06-12 at 14.39.52 (1).jpeg", caption: "¡Y dale U! ⚽" },
+            { url: "img/WhatsApp Image 2026-06-12 at 14.39.52 (2).jpeg", caption: "¡El mejor equipo! 🏆" }
         ];
 
         let currentPhotoIndex = 0;
@@ -217,6 +214,12 @@
         
         const music = document.getElementById('bg-music');
         const spinningRecord = document.getElementById('spinning-record');
+
+        // Configurar loop para que regrese al segundo 10 al terminar
+        music.addEventListener('ended', function() {
+            music.currentTime = 10;
+            music.play();
+        });
 
         // Inicializar efectos al cargar
         window.onload = function() {
@@ -237,7 +240,8 @@
                 main.classList.add('opacity-100');
             }, 1000);
 
-            // Intentar reproducir música automáticamente
+            // Intentar reproducir música automáticamente desde el segundo 10
+            music.currentTime = 10;
             playMusic();
             
             // Iniciar carrusel de fotos
